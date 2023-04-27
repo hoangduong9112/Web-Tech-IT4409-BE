@@ -5,7 +5,8 @@ create table User (
     email varchar(255) unique not null,
     password varchar(255) not null,
     username varchar(255),
-    role enum('ADMIN', 'USER')
+    role enum('ADMIN', 'USER'),
+    salt varchar(255)
 );
 create table Token (
 	id bigint auto_increment not null primary key,

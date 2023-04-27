@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+module.exports = app => {
+  const users = require("../controllers/UserController.js");
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+  var router = require("express").Router();
 
-module.exports = router;
+  // Create a new Tutorial
+  router.post("/signUp", users.create);
+
+  app.use('/api/user', router);
+};
