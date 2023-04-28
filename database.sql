@@ -2,15 +2,14 @@ create database web;
 use web;
 create table User (
 	id bigint auto_increment not null primary key,
-    email varchar(255) unique not null,
+    email varchar(100) unique not null,
     password varchar(255) not null,
-    username varchar(255),
+    username varchar(100),
     role enum('ADMIN', 'USER'),
     salt varchar(255)
 );
 create table Token (
-	id bigint auto_increment not null primary key,
-    user_id bigint unique not null,
+    user_id bigint unique not null primary key,
     token varchar(255),
     FOREIGN KEY (user_id) references User(id)
 );

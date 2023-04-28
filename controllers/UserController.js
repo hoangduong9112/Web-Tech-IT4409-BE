@@ -9,9 +9,7 @@ const hashPassword = function (password, salt) {
 // Sign Up
 exports.signUp = (req, res) => {
   if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
+    res.status(400).send({ message: "Content can not be empty!" });
   }
   let pw = req.body.password;
   if (pw.length < 8) {

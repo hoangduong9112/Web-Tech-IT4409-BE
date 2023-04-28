@@ -1,4 +1,4 @@
-const sql = require('../config/Db.js');
+const sql = require('../repository/Db.js');
 
 // constructor
 const User = function(user) {
@@ -28,10 +28,8 @@ User.findById = (id, result) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
-      return;
     } else if (res.length) {
       result(null, res[0]);
-      return;
     }
   })
 }
@@ -41,10 +39,8 @@ User.findByEmail = (email, result) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
-      return;
     } else if (res.length) {
       result(null, res[0]);
-      return;
     } else {
       result(null, null);
     }

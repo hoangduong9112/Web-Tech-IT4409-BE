@@ -1,4 +1,4 @@
-const sql = require('../config/Db.js');
+const sql = require('../repository/Db.js');
 
 // constructor
 const Token = function(id) {
@@ -28,16 +28,14 @@ Token.create = (token, result) => {
 }
 
 Token.validate = (token, result) => {
-    sql.query(`SELECT * FROM Token WHERE token = ${token}`, (err, res) => {
+    sql.query(`SELECT * FROM Token WHERE token = '${token}'`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
-            return;
         } else if (res.length) {
             result(null, res[0]);
-            return;
         } else {
-            result({error: "Invalid Token!"}, null)
+            result({message: "Invalid Token!"}, null)
         }
 
     })

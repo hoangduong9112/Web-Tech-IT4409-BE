@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to work management application." });
 });
 
-require("./routes/index.js")(app);
+require("./routes/routing.js")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
