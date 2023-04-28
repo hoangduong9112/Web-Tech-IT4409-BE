@@ -1,5 +1,4 @@
 const sql = require('../config/Db.js');
-const Token = require('../models/Token.js')
 
 // constructor
 const User = function(user) {
@@ -19,14 +18,37 @@ User.create = (newUser, result) => {
       result(err, null);
       return;
     }
-    const userToken = new Token({ id: res.insertId});
-    Token.create({
-
-    })
-    console.log("created user: ", { id: res.insertId, email: newUser.email, username: newUser.username, role: newUser.role, token: userToken.token });
-    result(null, { id: res.insertId, email: newUser.email, username: newUser.username, role: newUser.role, token: userToken.token  });
+    console.log("created user: ", { id: res.insertId, email: newUser.email, username: newUser.username, role: newUser.role });
+    result(null, { id: res.insertId, email: newUser.email, username: newUser.username, role: newUser.role });
   });
 };
 
+User.findById = (id, result) => {
+  sql.query(`SELECT * FROM User WHERE id = ${id}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else if (res.length) {
+      result(null, res[0]);
+      return;
+    }
+  })
+}
+
+User.findByEmail = (email, result) => {
+  sql.query(`SELECT * FROM User WHERE email = '${email}'`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    } else if (res.length) {
+      result(null, res[0]);
+      return;
+    } else {
+      result(null, null);
+    }
+  })
+}
 
 module.exports = User;

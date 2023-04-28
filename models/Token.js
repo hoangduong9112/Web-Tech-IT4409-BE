@@ -1,4 +1,10 @@
-const sql = require('../config/Db.js')
+const sql = require('../config/Db.js');
+
+// constructor
+const Token = function(id) {
+    this.user_id = id;
+    this.token = generate_token(64);
+}
 
 function generate_token(length) {
     //edit the token allowed characters
@@ -11,21 +17,46 @@ function generate_token(length) {
     return b.join("");
 }
 
-const Token = function (token) {
-    this.user_id = token.user_id;
-    this.token = generate_token(32);
-}
-
 Token.create = (token, result) => {
     sql.query("INSERT INTO Token SET ?", token, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
             return;
-        }        
+        }       
     })
 }
 
-// Token.findByUserId = (userId, result) => {
-//     sql.query(`SELECT * FROM` )
-// }
+Token.validate = (token, result) => {
+    sql.query(`SELECT * FROM Token WHERE token = ${token}`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        } else if (res.length) {
+            result(null, res[0]);
+            return;
+        } else {
+            result({error: "Invalid Token!"}, null)
+        }
+
+    })
+}
+
+Token.findById = (userId, result) => {
+    sql.query(`SELECT * FROM Token WHERE user_id = ${userId}`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        } else if (res.length) {
+            result(null, res[0]);
+            return;
+        } else {
+            result({message: "Invalid User!"}, null)
+        }
+
+    })
+}
+
+module.exports = Token;
