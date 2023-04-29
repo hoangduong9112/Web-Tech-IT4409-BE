@@ -42,7 +42,7 @@ exports.getOne = (req, res) => {
             })
             Member.checkMember(member, (error, response) => {
                 if (error)
-                    res.send(500).send({ message: error.message || "Error while checking member."});
+                    res.status(500).send({ message: error.message || "Error while checking member."});
                 else {
                     if (response) {
                         Workspace.findById(req.params.id, (e, r) => {
@@ -75,7 +75,7 @@ exports.changeName = (req, res) => {
             })
             Member.checkMember(member, (error, response) => {
                 if (error)
-                    res.send(500).send({ message: error.message || "Error while checking member."});
+                    res.status(500).send({ message: error.message || "Error while checking member."});
                 else {
                     if (response.role == 'ADMIN') {
                         const workspace = new Workspace(req.body.name);
@@ -149,7 +149,12 @@ exports.getAllMember = (req, res) => {
                             if (e)
                                 res.status(500).send({ message: e.message || "Error while getting members."})
                             else {
-                                res.send(r);
+                                const out = [];
+                                for (let i = 0; i < r.length; i++) {
+                                    r[i].role = response[i].role;
+                                    out.push(r[i]);
+                                }
+                                res.send(out);
                             }
                         })
                     } else {
@@ -172,7 +177,7 @@ exports.addMember = (req, res) => {
             })
             Member.checkMember(member, (error, response) => {
                 if (error)
-                    res.send(500).send({ message: error.message || "Error while checking member."});
+                    res.status(500).send({ message: error.message || "Error while checking member."});
                 else {
                     if (response) {
                         if (response.role == 'ADMIN') {
@@ -196,4 +201,77 @@ exports.addMember = (req, res) => {
             })
         }
     })
+}
+
+exports.updateRole = (req, res) => {
+    Token.validate(req.headers.token, (err, data) => {
+        if (err)
+            res.status(401).send({ message: err.message || "Invalid Token!"})
+        else {
+            const user = new Member({
+                userId: data.user_id,
+                workspaceId: req.params.id
+            })
+            Member.checkMember(user, (error, response) => {
+                if (error)
+                    res.status(500).send({ message: error.message || "Error while checking member."});
+                else {
+                    if (response?.role == 'ADMIN') {
+                        const member = new Member({
+                            userId: req.body.userId,
+                            workspaceId: req.params.id,
+                            role: req.body.role
+                        })
+                        Member.updateRole(member, (e, r) => {
+                            if (e)
+                                res.status(500).send({ message: e.message || "Error while updating role"})
+                            else {
+                                res.send({ message: "Update Role successfully."})
+                            }
+                        })
+                    } else {
+                        res.status(401).send({ message: "Unauthorization."});
+                    }
+                }
+            })
+        }
+    })    
+}
+
+exports.deleteMember = (req, res) => {
+    Token.validate(req.headers.token, (err, data) => {
+        if (err)
+            res.status(401).send({ message: err.message || "Invalid Token!"})
+        else {
+            const user = new Member({
+                userId: data.user_id,
+                workspaceId: req.params.id
+            })
+            Member.checkMember(user, (error, response) => {
+                if (error)
+                    res.status(500).send({ message: error.message || "Error while checking member."});
+                else {
+                    if (response?.role == 'ADMIN') {
+                        const member = new Member({
+                            userId: req.body.userId,
+                            workspaceId: req.params.id,
+                        })
+                        Member.deleteOne(member, (e, r) => {
+                            if (e)
+                                res.status(500).send({ message: e.message || "Error while deleting member."})
+                            else {
+                                if (r.affectedRows) {
+                                    res.send({ message: "Member has been deleted."})
+                                } else {
+                                    res.status(403).send({ message: "Member is not in Workspace."})
+                                }
+                            }
+                        })
+                    } else {
+                        res.status(401).send({ message: "Unauthorization."});
+                    }
+                }
+            })
+        }
+    })    
 }

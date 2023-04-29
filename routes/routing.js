@@ -15,6 +15,8 @@ module.exports = app => {
   router.delete("/workspace/:id", workspaces.deleteOne);
   router.post("/workspace/:id/member", workspaces.addMember);
   router.get("/workspace/:id/member", workspaces.getAllMember);
+  router.patch("/workspace/:id/member", workspaces.updateRole);
+  router.delete("/workspace/:id/member", workspaces.deleteMember);
 
   app.use('/api/', router);
 };

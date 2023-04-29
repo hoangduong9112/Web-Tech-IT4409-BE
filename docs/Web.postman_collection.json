@@ -198,7 +198,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userId\": 6,\r\n    \"role\": \"MEMBER\"\r\n}",
+					"raw": "{\r\n    \"userId\": 7,\r\n    \"role\": \"MEMBER\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -232,6 +232,78 @@
 						"type": "text"
 					}
 				],
+				"url": {
+					"raw": "localhost:8080/api/workspace/5/member",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"5",
+						"member"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update role",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 5,\r\n    \"role\": \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/workspace/5/member",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"5",
+						"member"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete member",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 7\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "localhost:8080/api/workspace/5/member",
 					"host": [
