@@ -47,23 +47,4 @@ User.findByEmail = (email, result) => {
   })
 }
 
-User.findByIds = (members, result) => {
-  let criteria ="";
-  for (let i = 0; i < members.length; i++) {
-    criteria = criteria.concat(`id = ${members[i].user_id}`);
-    if (i < members.length - 1)
-      criteria = criteria.concat(" OR ");
-  }
-  sql.query(`SELECT id, username, email, role FROM User WHERE ${criteria}`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-    } else if (res.length) {
-      result(null, res);
-    } else {
-      result(null, null)
-    }
-  })
-}
-
 module.exports = User;

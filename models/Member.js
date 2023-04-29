@@ -42,15 +42,19 @@ Member.deleteByWorkspace = (id, result) => {
 }
 
 Member.getAllMember = (id, result) => {
-    sql.query(`SELECT user_id, role FROM Member WHERE workspace_id = ${id}`, (err, res) => {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-            return;
-        }
+    sql.query(`SELECT User.id, User.username, User.email, Member.role 
+    FROM User JOIN Member ON User.id = Member.user_id 
+    WHERE Member.workspace_id = ${id}`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else if (res.length) {
         result(null, res);
-    })
-}
+      } else {
+        result(null, null)
+      }
+    })  
+  }
 
 Member.updateRole = (member, result) => {
     sql.query(`UPDATE Member SET role = '${member.role}' WHERE user_id = ${member.user_id} AND workspace_id = ${member.workspace_id}`,

@@ -99,6 +99,31 @@
 			"response": []
 		},
 		{
+			"name": "get all workspaces",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/workspace",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "get workspace",
 			"request": {
 				"method": "GET",
@@ -315,6 +340,162 @@
 						"workspace",
 						"5",
 						"member"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add column",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Col\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/workspace/11/column",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"11",
+						"column"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all columns",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/workspace/11/column",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"11",
+						"column"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get a column",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/workspace/11/column/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"11",
+						"column",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change column's name",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renamed Column\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/workspace/11/column/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"11",
+						"column",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete a column",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/workspace/11/column/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"11",
+						"column",
+						"6"
 					]
 				}
 			},

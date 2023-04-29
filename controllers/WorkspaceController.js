@@ -1,7 +1,7 @@
 const Workspace = require('../models/Workspace.js');
 const Member = require('../models/Member.js');
 const Token = require('../models/Token.js');
-const User = require('../models/User.js');
+const Column = require('../models/Column.js');
 
 exports.create = (req, res) => {
     Token.validate(req.headers.token, (err, data) => {
@@ -18,10 +18,11 @@ exports.create = (req, res) => {
                         workspaceId: response.id,
                         role: 'ADMIN'
                     });
-                    Member.create(member, (e, r) => {
-                        if (e)
+                    Member.create(member, (e1, r1) => {
+                        if (e1)
                             res.status(500).send({ message: e.message || "Error while adding user into member"})
                         else {
+                            Column.createDefault(response.id, (e2, r2) => { console.log("error: ", e2)})
                             res.send(response);
                         }
                     })
@@ -52,7 +53,7 @@ exports.getOne = (req, res) => {
                                 if (r)
                                     res.send(r);
                                 else
-                                    res.status(204);
+                                    res.status(204).send();
                             }
                         })
                     } else {
@@ -108,26 +109,52 @@ exports.deleteOne = (req, res) => {
                 if (error)
                     res.send(500).send({ message: error.message || "Error while checking member."});
                 else {
-                    if (response) {
-                        if (response.role == 'ADMIN') {
-                            Member.deleteByWorkspace(req.params.id, (mE) => {
-                                if (mE) {
-                                    res.status(500).send({ message: mE.message || "Error while deleting member."});
-                                    return;
-                                }
-                            })
-                            Workspace.deleteById(req.params.id, (wE) => {
-                                if (wE)
-                                    res.status(500).send({ message: wE.message || "Error while deleting workspace."});
-                                else {
+                    if (response?.role == 'ADMIN') {
+                        Member.deleteByWorkspace(req.params.id, (mE) => {
+                            if (mE) {
+                                res.status(500).send({ message: mE.message || "Error while deleting member."});
+                                return;
+                            }
+                        })
+                        Column.deleteByWorkspace(req.params.id, (cE) => {
+                            if (cE) {
+                                res.status(500).send({ message: cE.message || "Error while deleting member."});
+                                return;
+                            }
+                        })
+                        Workspace.deleteById(req.params.id, (wE, wR) => {
+                            if (wE)
+                                res.status(500).send({ message: wE.message || "Error while deleting workspace."});
+                            else {
+                                if (wR.affectedRows) {
                                     res.send({ message: "Workspace deleted."})
+                                } else {
+                                    res.status(403).send({ message: "Workspace does not exist."})
                                 }
-                            })
-                        } else {
-                            res.status(403).send({ message: "Unauthorization."});
-                        }
+                            }
+                        })
                     } else {
-                        res.status(403).send({ message: "Workspace does not exist."})
+                        res.status(403).send({ message: "Unauthorization."});
+                    }
+                }
+            })
+        }
+    })
+}
+
+exports.getAllWorkspace = (req, res) => {
+    Token.validate(req.headers.token, (err, data) => {
+        if (err)
+            res.status(401).send({ message: err.message || "Invalid Token!"})
+        else {
+            Workspace.getAllWorkspace(data.user_id, (error, response) => {
+                if (error)
+                    res.status(500).send({ message: error.message || "Error while getting workspace."});
+                else {
+                    if (response) {
+                        res.send(response);
+                    } else {
+                        res.status(204).send();
                     }
                 }
             })
@@ -142,23 +169,12 @@ exports.getAllMember = (req, res) => {
         else {
             Member.getAllMember(req.params.id, (error, response) => {
                 if (error)
-                    res.status(500).send({ message: error.message || "Error while getting member."})
+                    res.status(500).send({ message: error.message || "Error while getting member."});
                 else {
                     if (response) {
-                        User.findByIds(response, (e, r) => {
-                            if (e)
-                                res.status(500).send({ message: e.message || "Error while getting members."})
-                            else {
-                                const out = [];
-                                for (let i = 0; i < r.length; i++) {
-                                    r[i].role = response[i].role;
-                                    out.push(r[i]);
-                                }
-                                res.send(out);
-                            }
-                        })
+                        res.send(response);
                     } else {
-                        res.status(204);
+                        res.status(204).send();
                     }
                 }
             })

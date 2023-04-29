@@ -61,7 +61,7 @@ exports.signIn = (req, res) => {
             else if (response) {
               res.send({ token: response.token });
             } else {
-              const userToken = new Token(data.user_id);
+              const userToken = new Token(data.userId);
               Token.create(userToken, (err1, data1) => {
                 if (err1)
                   res.status(500).send({ message: err1.message || "Some error occurred while creating the Token." }) 
