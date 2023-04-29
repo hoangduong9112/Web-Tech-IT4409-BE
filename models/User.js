@@ -24,7 +24,7 @@ User.create = (newUser, result) => {
 };
 
 User.findById = (id, result) => {
-  sql.query(`SELECT * FROM User WHERE id = ${id}`, (err, res) => {
+  sql.query(`SELECT id, username, email, role FROM User WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -43,6 +43,25 @@ User.findByEmail = (email, result) => {
       result(null, res[0]);
     } else {
       result(null, null);
+    }
+  })
+}
+
+User.findByIds = (members, result) => {
+  let criteria ="";
+  for (let i = 0; i < members.length; i++) {
+    criteria = criteria.concat(`id = ${members[i].user_id}`);
+    if (i < members.length - 1)
+      criteria = criteria.concat(" OR ");
+  }
+  sql.query(`SELECT id, username, email, role FROM User WHERE ${criteria}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else if (res.length) {
+      result(null, res);
+    } else {
+      result(null, null)
     }
   })
 }

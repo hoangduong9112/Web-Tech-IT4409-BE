@@ -10,6 +10,11 @@ module.exports = app => {
 
   // Workspace
   router.post("/workspace", workspaces.create);
+  router.get("/workspace/:id", workspaces.getOne);
+  router.patch("/workspace/:id", workspaces.changeName);
+  router.delete("/workspace/:id", workspaces.deleteOne);
+  router.post("/workspace/:id/member", workspaces.addMember);
+  router.get("/workspace/:id/member", workspaces.getAllMember);
 
   app.use('/api/', router);
 };

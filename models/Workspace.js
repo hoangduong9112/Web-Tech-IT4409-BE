@@ -15,14 +15,36 @@ Workspace.create = (workspace, result) => {
     })
 }
 
-Workspace.changeNameById = (workspace, result) => {
-    sql.query(`UPDATE Workspace SET name = '${workspace.name} WHERE id = ${workspace.id}`, (err, res) => {
+Workspace.findById = (id, result) => {
+    sql.query(`SELECT * FROM Workspace WHERE id = ${id}`, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        result(null, res[0]);
+    })
+}
+
+Workspace.updateById = (id, workspace, result) => {
+    sql.query(`UPDATE Workspace SET name = '${workspace.name}' WHERE id = ${id}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
             return;
         }
         result(null, res);
+    })
+}
+
+Workspace.deleteById = (id, result) => {
+    sql.query(`DELETE FROM Workspace WHERE id = ${id}`, (err) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err);
+            return;
+        }
+        result(null);
     })
 }
 

@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "73f7ba75-ed81-40c0-85fb-e5e14287c9b4",
+		"name": "Web",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23973649"
+	},
+	"item": [
+		{
+			"name": "sign up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Duong3\",\r\n    \"email\": \"duong3@gmail.com\",\r\n    \"password\": \"Test0001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/user/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"duong3@gmail.com\",\r\n    \"password\": \"Duong0000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/user/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create workspace",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Workspace 3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/workspace",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get workspace",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/workspace/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete workspace",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/workspace/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change name workspace",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test Rename 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/workspace/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add member",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 6,\r\n    \"role\": \"MEMBER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/workspace/5/member",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"5",
+						"member"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all member",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "ffm1p1ngW0SFSMmlRzkwfO2qWb2gFvVpAWjGSgHs9v9VlApyOEgnOHBqKu4qO6fB",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/workspace/5/member",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"workspace",
+						"5",
+						"member"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
