@@ -2,6 +2,8 @@ module.exports = app => {
   const users = require("../controllers/UserController.js");
   const workspaces = require("../controllers/WorkspaceController.js");
   const columns = require("../controllers/ColumnController.js");
+  const cards = require("../controllers/CardController.js");
+  const notifications = require("../controllers/NotificationController.js");
 
   var router = require("express").Router();
   
@@ -27,5 +29,18 @@ module.exports = app => {
   router.patch("/workspace/:id/column/:colId", columns.changeName);
   router.delete("/workspace/:id/column/:colId", columns.deleteColumn);
 
+  // Card
+  router.post("/workspace/:id/card", cards.addCard);
+  router.get("/workspace/:id/card", cards.getAllCard);
+  router.get("/workspace/:id/card/:cardId", cards.getCard);
+  router.patch("/workspace/:id/card/:cardId", cards.changeName);
+  router.patch("/workspace/:id/card/changecolumn/:cardId", cards.changeColumn);
+  router.delete("/workspace/:id/card/:cardId", cards.deleteCard);
+  
+  //Notification
+  router.post("/workspace/:id/notification", notifications.create);
+  router.get("/workspace/:id/notification", notifications.getAllNotification);
+  router.get("/workspace/:id/notification/:notificationId", notifications.getOne);
+  
   app.use('/api/', router);
 };

@@ -32,20 +32,23 @@ create table WColumn (
 );
 create table Card (
 	id bigint auto_increment not null primary key,
+    name varchar(50) not null,
     description varchar(500),
-    startTime datetime,
-    endTime datetime,
+    start_time date,
+    end_time date,
     file_url varchar(255),
     assigned_id bigint not null,
     column_id bigint not null,
+    workspace_id bigint not null,
     comment varchar(500),
     FOREIGN KEY (assigned_id) references User(id),
-    FOREIGN KEY (column_id) references WColumn(id)
+    FOREIGN KEY (column_id) references WColumn(id),
+    FOREIGN KEY (workspace_id) references Workspace(id)
 );
 create table Notification (
 	user_id bigint unique not null primary key,
     content varchar(500),
-    createdAt datetime not null,
+    created_at datetime not null,
     FOREIGN KEY (user_id) references User(id)
 );
-show tables;
+	show tables;
